@@ -39,9 +39,14 @@ private:
     void get_params();
 
     /*
-     * Promptly print console to terminal
+     * Get user input character from console
      */
-    void print_console();
+    void get_input();
+
+    /*
+     * Print user prompt terminal
+     */
+    void print_console_prompt();
 
 public:
 
