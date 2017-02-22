@@ -15,8 +15,12 @@ typedef class TypeTester {
 private:
 
     std::atomic<bool> times_up;
+    std::atomic<bool> force_quit;
 
     unsigned run_time;
+    unsigned num_words_read;
+    unsigned passage_len;
+    unsigned min_word_len;
 
     stringstream console_out;
 
@@ -29,14 +33,19 @@ private:
     TypeTester();
 
     /*
+     * Get default parameters
+     */
+    void get_params();
+    
+    /*
      * Reads common word list
      */
     void get_words();
 
     /*
-     * Get default parameters
+     * Builds the passage the user have to type up
      */
-    void get_params();
+    void build_passage();
 
     /*
      * Get user input character from console

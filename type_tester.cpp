@@ -1,17 +1,74 @@
 #include "type_tester.hpp"
 
+#include <unordered_map>
+#include <fstream>
+#include <string>
+#include <stdexcept>
+#include <exception>
+
+
+using namespace std;
+
 void
 TypeTester::run_type_tester() {
     times_up = false;
-    
+
     get_params();
     get_words();
 
     gen_passage();
 
     while (!times_up || !force_quit) {
-        get_input();i
+        get_input();
     }
 
     add_log();
+}
+
+void
+TypeTester::get_params() {
+    string params_file_name = "./param.properties";
+    ifstream param_file(params_file_name);
+
+    if (!param_file) 
+    {
+        throw invalid_argument(params_file_name + " not found. Unable to initialize variables.");
+    }
+
+    unordered_map<string, pair<bool, unsigned *>> init_status;
+    init_status["run_time"] = make_pair(false, &this->run_time);
+    init_status["num_words_read"] = make_pair(false, &this->num_words_read);
+    init_status["passage_len"] = make_pair(false, &this->passage_len);
+    init_status["min_word_len"] = make_pair(false, &this->min_word_len);
+
+    string line;
+    while (getline(param_file, line)) 
+    {
+        istringstream iss(line);
+
+        string param;
+        string value;
+        if (!(iss >> param >> value)) 
+        {
+            throw invalid_argument("Incorrect input parameter format.");
+        }
+
+        auto iter = init_status.find(param);
+        if (iter == init_status.end()) 
+        {
+            throw invalid_argument("Unrecognized parameter: " + param + ".");
+        }
+
+        iter->second.first = true;
+        *(iter->second.second) = stof(value);
+        printf("param: %s, value: %f\n", iter->first.c_str(), *(iter->second.second));
+    }
+
+    for (auto iter = init_status.begin(); iter != init_status.end(); ++iter) 
+    {
+        if (!iter->second.first) 
+        {
+            throw invalid_argument(iter->first + " left uninitialized.");
+        }
+    }
 }
