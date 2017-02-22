@@ -1,5 +1,8 @@
 #pragma once
 
+#include <atomic>
+#include <sstream>
+
 /*
  * Global keeps all the global variables
  *
@@ -9,6 +12,14 @@
  */
 
 typedef class TypeTester {
+private:
+
+    std::atomic<bool> times_up;
+
+    unsigned run_time;
+
+    stringstream console_out;
+
 public:
 
     void run_type_tester();
@@ -21,6 +32,11 @@ private:
      * Reads common word list
      */
     void get_words();
+
+    /*
+     * Get default parameters
+     */
+    void get_params();
 
     /*
      * Promptly print console to terminal
