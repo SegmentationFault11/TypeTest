@@ -26,7 +26,7 @@ private:
 
 public:
 
-    void run_type_tester();
+    void run();
 
 private:
 

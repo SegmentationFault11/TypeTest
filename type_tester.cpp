@@ -10,7 +10,7 @@
 using namespace std;
 
 void
-TypeTester::run_type_tester() {
+TypeTester::run() {
     times_up = false;
 
     get_params();
