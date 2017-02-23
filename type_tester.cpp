@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include <exception>
 
-
 using namespace std;
 
 void
@@ -32,7 +31,8 @@ TypeTester::get_params() {
 
     if (!param_file) 
     {
-        throw invalid_argument(params_file_name + " not found. Unable to initialize variables.");
+        throw invalid_argument(params_file_name + 
+                " not found. Unable to initialize variables.");
     }
 
     unordered_map<string, pair<bool, unsigned *>> init_status;
@@ -61,7 +61,6 @@ TypeTester::get_params() {
 
         iter->second.first = true;
         *(iter->second.second) = stof(value);
-        printf("param: %s, value: %f\n", iter->first.c_str(), *(iter->second.second));
     }
 
     for (auto iter = init_status.begin(); iter != init_status.end(); ++iter) 
@@ -71,4 +70,14 @@ TypeTester::get_params() {
             throw invalid_argument(iter->first + " left uninitialized.");
         }
     }
+}
+
+void 
+TypeTester::get_words() {
+    string words_file_name = "./words.txt";
+    ifstream words_file(words_file_name);
+
+    if (!words_file) {
+        throw invalid_argument(words_file_name + 
+                " not found. Unable to fill dictionary");
 }
